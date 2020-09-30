@@ -86,6 +86,21 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    title: 'WEB36 Components Project',
+    date: 'Sep 30th, 2020',
+    firstParagraph: `This is a personalized article for WEB36 Unit 2, module 3: "Components I".`,
+
+    secondParagraph: `Toad-like smile Flourish and Blotts he knew I’d come back Quidditch World Cup. Fat Lady baubles banana fritters fairy lights 
+    Petrificus Totalus. So thirsty, deluminator firs’ years follow me 12 inches of parchment. Head Boy start-of-term banquet Cleansweep Seven 
+    roaring lion hat. Unicorn blood crossbow mars is bright tonight, feast Norwegian Ridgeback. Come seek us where our voices sound, we cannot 
+    sing above the ground, Ginny Weasley bright red. Fanged frisbees, phoenix tears good clean match.`,
+
+    thirdParagraph: `Dagobah hutt jawa leia calamari ventress skywalker yoda. Binks wicket hutt coruscant sidious
+    naboo ackbar tatooine. Hutt lars padmé darth. Maul solo darth darth jabba qui-gon chewbacca darth maul. Moff baba wicket
+    han. C-3po antilles moff qui-gon ahsoka aayla dooku amidala. Palpatine droid amidala droid k-3po twi'lek padmé wookiee. Leia
+    moff calamari mon obi-wan. Solo grievous lando coruscant. Jinn darth palpatine obi-wan mon.`
   }
 ];
 
@@ -93,26 +108,62 @@ const data = [
   Step 1: Write a component called 'articleMaker' to create an article.
   Your component is a function that takes an article object as its only argument,
   and returns a DOM node looking like the one below:
-
   <div class="article">
     <h2>{title of the article}</h2>
     <p class="date">{date of the article}</p>
-
     {three separate paragraph elements}
-
     <span class="expandButton">+</span>
   </div>
-
   Step 2: Still inside `articleMaker`, add an event listener to the span.expandButton.
   This listener should toggle the class 'article-open' on div.article.
-
   Step 3: Don't forget to return something from your function!
-
   Step 4: Outside your function now, loop over the data. At each iteration you'll use your component
   to create a div.article element and append it to the DOM inside div.articles (see index.html).
-
   Step 5: Try adding new article object to the data array. Make sure it is in the same format as the others.
   Refresh the page to see the new article.
 */
-function articleMaker(array){
+
+// place to add your articles
+const articles = document.querySelector('.articles');
+
+//instantiate all elements
+
+function articleMaker (title, date, firstParagraph, secondParagraph, thirdParagraph) {
+  const newArticle = document.createElement('div');
+  const h2 = document.createElement('h2');
+  const dateP = document.createElement('p');
+  const text1 = document.createElement('p');
+  const text2 = document.createElement('p');
+  const text3 = document.createElement('p');
+  const spanButton = document.createElement('span');
+
+  newArticle.appendChild(h2);
+  newArticle.appendChild(dateP);
+  newArticle.appendChild(text1);
+  newArticle.appendChild(text2);
+  newArticle.appendChild(text3);
+  newArticle.appendChild(spanButton);
+
+  newArticle.classList.add('article');
+  dateP.classList.add('date');
+  spanButton.classList.add('expandButton');
+
+  h2.textContent = title;
+  dateP.textContent = date;
+  text1.textContent = firstParagraph;
+  text2.textContent = secondParagraph;
+  text3.textContent = thirdParagraph;
+  spanButton.textContent = '+';
+
+  spanButton.addEventListener('click', (event) => {
+    newArticle.classList.toggle('article-open');
+  });
+
+  return newArticle;
+
 }
+
+data.forEach (item => {
+  const article = articleMaker(item.title, item.date, item.firstParagraph, item.secondParagraph, item.thirdParagraph);
+  articles.appendChild(article);
+});
